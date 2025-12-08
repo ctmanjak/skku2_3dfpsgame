@@ -4,7 +4,7 @@
 analysis:
   # Directories to analyze
   include:
-    - "Assets/02Scripts/**/*.cs"
+    - "Assets/02.Scripts/**/*.cs"
     - "Assets/Editor/**/*.cs"
     - "Assets/Plugins/**/*.cs"
   
