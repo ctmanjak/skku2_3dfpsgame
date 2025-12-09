@@ -25,12 +25,12 @@ namespace Player
         private void Update()
         {
             float deltaTime = Time.deltaTime;
-            
-            _playerMove.Move(deltaTime);
-            if (_playerMove.IsSprinting)
+
+            if (_playerMove.WantsToSprint)
             {
-                _playerStat.Stamina.TryConsume(_playerStat.ConsumeStaminaAmountBySprint.Value, deltaTime);
+                _playerMove.SetCanSprinting(_playerStat.Stamina.TryConsume(_playerStat.ConsumeStaminaAmountBySprint.Value, deltaTime));
             }
+            _playerMove.Move(deltaTime);
             _playerStat.Stamina.Regenerate(deltaTime);
         }
     }

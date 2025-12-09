@@ -15,9 +15,10 @@ namespace Player
 
         private float _velocityY;
 
-        private bool _isSprinting;
+        private bool _canSprinting;
+        private bool _wantsToSprint;
 
-        public bool IsSprinting => _isSprinting;
+        public bool WantsToSprint => _wantsToSprint;
 
         private void Awake()
         {
@@ -47,14 +48,19 @@ namespace Player
 
             float moveSpeed = _moveSpeed;
 
-            if (Input.GetKeyDown(KeyCode.LeftShift)) _isSprinting = true;
-            if (Input.GetKeyUp(KeyCode.LeftShift)) _isSprinting = false;
+            if (Input.GetKeyDown(KeyCode.LeftShift)) _wantsToSprint = true;
+            if (Input.GetKeyUp(KeyCode.LeftShift)) _wantsToSprint = false;
 
-            if (_isSprinting) moveSpeed *= _sprintMultiplier;
+            if (_canSprinting && _wantsToSprint) moveSpeed *= _sprintMultiplier;
             
             direction.y = _velocityY;
             
             _controller.Move(direction * (moveSpeed * deltaTime));
+        }
+
+        public void SetCanSprinting(bool canSprinting)
+        {
+            _canSprinting = canSprinting;
         }
     }
 }
