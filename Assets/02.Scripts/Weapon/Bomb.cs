@@ -1,12 +1,15 @@
 using UnityEngine;
 
-public class Bomb : MonoBehaviour
+namespace Weapon
 {
-    [SerializeField] private GameObject _explosionEffectPrefab;
-    
-    private void OnCollisionEnter(Collision collision)
+    public class Bomb : MonoBehaviour
     {
-        Instantiate(_explosionEffectPrefab, transform.position, Quaternion.identity);
-        Destroy(gameObject);
+        [SerializeField] private GameObject _explosionEffectPrefab;
+    
+        private void OnCollisionEnter(Collision collision)
+        {
+            Instantiate(_explosionEffectPrefab, transform.position, Quaternion.identity);
+            Destroy(gameObject);
+        }
     }
 }

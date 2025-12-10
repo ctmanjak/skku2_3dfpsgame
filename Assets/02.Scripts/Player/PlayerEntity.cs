@@ -7,12 +7,16 @@ namespace Player
     [RequireComponent(typeof(PlayerRotate))]
     [RequireComponent(typeof(PlayerInput))]
     [RequireComponent(typeof(PlayerBomb))]
+    [RequireComponent(typeof(PlayerEquipment))]
+    [RequireComponent(typeof(PlayerGunFire))]
     public class PlayerEntity : MonoBehaviour
     {
         private PlayerMove _playerMove;
         private PlayerStat _playerStat;
         private PlayerInput _playerInput;
         private PlayerBomb _playerBomb;
+        private PlayerEquipment _playerEquipment;
+        private PlayerGunFire _playerGunFire;
 
         private void Awake()
         {
@@ -20,12 +24,16 @@ namespace Player
             _playerStat = GetComponent<PlayerStat>();
             _playerInput = GetComponent<PlayerInput>();
             _playerBomb = GetComponent<PlayerBomb>();
+            _playerEquipment = GetComponent<PlayerEquipment>();
+            _playerGunFire = GetComponent<PlayerGunFire>();
         }
 
         private void Start()
         {
             _playerMove.Initialize(_playerStat.MoveSpeed.Value, _playerStat.JumpPower.Value, _playerStat.SprintMultiplier.Value);
             _playerStat.Initialize();
+            _playerEquipment.Initialize();
+            _playerGunFire.Initialize(_playerEquipment.EquippedGun);
         }
 
         private void Update()
@@ -51,6 +59,19 @@ namespace Player
             {
                 _playerBomb.Fire();
                 _playerInput.ConsumeBomb();
+            }
+
+            if (_playerInput.FireHeld)
+            {
+                if (!_playerEquipment.IsAmmoLeftInGun())
+                {
+                    _playerEquipment.Reload(_playerEquipment.GetNextMagazine());
+                } else _playerGunFire.Fire();
+            }
+
+            if (_playerInput.ReloadPressed)
+            {
+                _playerEquipment.Reload(_playerEquipment.GetNextMagazine());
             }
             
             _playerMove.Move(_playerInput.MoveAxis, deltaTime);

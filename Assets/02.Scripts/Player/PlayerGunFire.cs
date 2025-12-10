@@ -1,4 +1,5 @@
 using UnityEngine;
+using Weapon;
 
 namespace Player
 {
@@ -6,32 +7,16 @@ namespace Player
     {
         [SerializeField] private Transform _fireTransform;
         [SerializeField] private ParticleSystem _hitEffect;
-        
-        private void Update()
+        [SerializeField] private Gun _gun;
+
+        public void Initialize(Gun gun)
         {
-            if (Input.GetKey(KeyCode.Q))
-            {
-                TryFire();
-            }
+            _gun = gun;
         }
         
-        private void TryFire()
+        public void Fire()
         {
-            Ray ray = new Ray(_fireTransform.position, Camera.main.transform.forward);
-            RaycastHit hitInfo = new RaycastHit();
-            Fire(ray, hitInfo);
-        }
-        
-        private void Fire(Ray ray, RaycastHit hitInfo)
-        {
-            bool isHit = Physics.Raycast(ray, out hitInfo);
-            if (isHit == true)
-            {   
-                Debug.Log($"Hit : {hitInfo.transform.name}");
-                _hitEffect.transform.position = hitInfo.point;
-                _hitEffect.transform.forward = hitInfo.normal;
-                _hitEffect.Play();
-            }
+            _gun.TryFire();
         }
     }
 }

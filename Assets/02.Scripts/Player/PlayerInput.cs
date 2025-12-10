@@ -8,9 +8,11 @@ namespace Player
         public Vector2 MoveAxis { get; private set; }
         
         public bool SprintHeld  { get; private set; }
+        public bool FireHeld  { get; private set; }
         
         public bool JumpPressed { get; private set; }
         public bool BombPressed { get; private set; }
+        public bool ReloadPressed { get; private set; }
 
         void Update()
         {
@@ -20,9 +22,11 @@ namespace Player
             );
             
             SprintHeld = Input.GetKey(KeyCode.LeftShift);
+            FireHeld = Input.GetKey(KeyCode.Q);
             
             JumpPressed = Input.GetButtonDown("Jump");
             BombPressed = Input.GetKeyDown(KeyCode.G);
+            ReloadPressed = Input.GetKeyDown(KeyCode.R);
         }
 
         public bool ConsumeJump()
@@ -36,6 +40,13 @@ namespace Player
         {
             if (!BombPressed) return false;
             BombPressed = false;
+            return true;
+        }
+
+        public bool ConsumeReload()
+        {
+            if (!ReloadPressed) return false;
+            ReloadPressed = false;
             return true;
         }
     }
