@@ -11,7 +11,7 @@ namespace Player
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.Q))
+            if (Input.GetKeyDown(KeyCode.G))
             {
                 Bomb bomb = Instantiate(_bombPrefab, _fireTransform.position, Quaternion.identity);
                 Rigidbody bombBody = bomb.GetComponent<Rigidbody>();

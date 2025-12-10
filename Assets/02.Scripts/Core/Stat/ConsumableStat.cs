@@ -44,14 +44,18 @@ namespace Core
 
         public bool TryConsume(float amount, float deltaTime)
         {
-            float deltaAmount = amount * deltaTime;
-            if (_value < deltaAmount) return false;
+            return TryDecrease(amount * deltaTime);
+        }
+
+        public bool TryDecrease(float amount)
+        {
+            if (_value < amount) return false;
             
-            Consume(deltaAmount);
+            Decrease(amount);
             return true;
         }
 
-        public void Consume(float amount)
+        public void Decrease(float amount)
         {
             SetValue(_value - amount);
         }

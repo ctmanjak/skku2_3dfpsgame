@@ -14,11 +14,10 @@ namespace Player
         private CharacterController _controller;
 
         private float _velocityY;
+        private bool _canJump;
+        private int _jumpCount;
 
-        private bool _canSprinting;
-        private bool _wantsToSprint;
-
-        public bool WantsToSprint => _wantsToSprint;
+        public int JumpCount => _jumpCount;
 
         private void Awake()
         {
@@ -44,23 +43,38 @@ namespace Player
             direction.Normalize();
             direction = transform.TransformDirection(direction);
 
-            if (Input.GetButtonDown("Jump") && _controller.isGrounded) _velocityY = _jumpPower;
+            if (Input.GetButtonDown("Jump"))
+            {
+                if (_controller.isGrounded) Jump();
+                
+            }
 
-            float moveSpeed = _moveSpeed;
-
-            if (Input.GetKeyDown(KeyCode.LeftShift)) _wantsToSprint = true;
-            if (Input.GetKeyUp(KeyCode.LeftShift)) _wantsToSprint = false;
-
-            if (_canSprinting && _wantsToSprint) moveSpeed *= _sprintMultiplier;
+            float moveSpeed = _moveSpeed * _sprintMultiplier;
             
             direction.y = _velocityY;
             
             _controller.Move(direction * (moveSpeed * deltaTime));
         }
 
-        public void SetCanSprinting(bool canSprinting)
+        public void SetSprintMultiplier(float multiplier)
         {
-            _canSprinting = canSprinting;
+            _sprintMultiplier = multiplier;
+        }
+
+        public void Jump()
+        {
+            _velocityY = _jumpPower;
+            _jumpCount++;
+        }
+
+        public bool IsGrounded()
+        {
+            return _controller.isGrounded;
+        }
+
+        public void Grounding()
+        {
+            _jumpCount = 0;
         }
     }
 }
