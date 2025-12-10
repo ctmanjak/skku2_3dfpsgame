@@ -12,6 +12,7 @@ namespace Core
         private bool _isFirstPerson = true;
 
         private float _transformTimer;
+        
         private Transform _targetTransform;
         private Transform _originTransform;
 
@@ -23,8 +24,7 @@ namespace Core
             Vector3 targetPosition = _targetTransform.position;
             if (_transformTween != null)
             {
-                _transformTimer += Time.deltaTime;
-                // if (_transformTimer > _transformDuration) _transformTween.Done();
+                _transformTimer = Mathf.Min(_transformTimer + Time.deltaTime, _transformDuration);
                 _transformTween.ChangeValues(_originTransform.position, targetPosition, _transformDuration);
                 _transformTween.ManualUpdate(_transformTimer, Time.unscaledDeltaTime);
             }
@@ -34,19 +34,18 @@ namespace Core
             {
                 _isFirstPerson = !_isFirstPerson;
 
-                _transformTimer = 0;
                 _originTransform = _targetTransform;
                 
+                if (_transformTimer != 0f) _transformTimer = Mathf.Max(_transformDuration - _transformTimer, 0f);
                 _transformTween?.Done();
-                
                 _transformTween = DOTween.To(
                     () => transform.position,
                     pos => transform.position = pos,
                     targetPosition,
                     _transformDuration
-                );
-                _transformTween.SetUpdate(UpdateType.Manual);
-                _transformTween.OnComplete(() => _transformTween = null);
+                ).SetUpdate(UpdateType.Manual)
+                .SetEase(Ease.Linear)
+                .OnComplete(() => _transformTween = null);
             }
         }
     }
