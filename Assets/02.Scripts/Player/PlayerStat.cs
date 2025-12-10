@@ -7,6 +7,7 @@ namespace Player
     {
         [SerializeField] private ConsumableStat _health;
         [SerializeField] private ConsumableStat _stamina;
+        [SerializeField] private ConsumableStat _bombCount;
         
         [SerializeField] private ValueStat _moveSpeed;
         [SerializeField] private ValueStat _jumpPower;
@@ -17,6 +18,7 @@ namespace Player
 
         public ConsumableStat Health => _health;
         public ConsumableStat Stamina => _stamina;
+        public ConsumableStat BombCount => _bombCount;
         
         public ValueStat MoveSpeed => _moveSpeed;
         public ValueStat JumpPower => _jumpPower;
@@ -25,10 +27,12 @@ namespace Player
         public ValueStat SprintMultiplier => _sprintMultiplier;
         public ValueStat MaxJumpCount => _maxJumpCount;
 
+
         public void Initialize()
         {
             _health.Initialize();
             _stamina.Initialize();
+            _bombCount.Initialize();
         }
     }
 }

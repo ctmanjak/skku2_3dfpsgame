@@ -6,17 +6,20 @@ namespace Player
     [RequireComponent(typeof(PlayerStat))]
     [RequireComponent(typeof(PlayerRotate))]
     [RequireComponent(typeof(PlayerInput))]
+    [RequireComponent(typeof(PlayerBomb))]
     public class PlayerEntity : MonoBehaviour
     {
         private PlayerMove _playerMove;
         private PlayerStat _playerStat;
         private PlayerInput _playerInput;
+        private PlayerBomb _playerBomb;
 
         private void Awake()
         {
             _playerMove = GetComponent<PlayerMove>();
             _playerStat = GetComponent<PlayerStat>();
             _playerInput = GetComponent<PlayerInput>();
+            _playerBomb = GetComponent<PlayerBomb>();
         }
 
         private void Start()
@@ -29,24 +32,28 @@ namespace Player
         {
             float deltaTime = Time.deltaTime;
 
-            if (_playerMove.IsGrounded())
-            {
-                _playerInput.Grounding();
-                _playerMove.Grounding();
-            }
-            if (_playerInput.WantsToSprint && _playerStat.Stamina.TryConsume(_playerStat.ConsumeStaminaAmountBySprint.Value, deltaTime))
+            if (_playerMove.IsGrounded()) _playerMove.Grounding();
+            if (_playerInput.SprintHeld && _playerStat.Stamina.TryConsume(_playerStat.ConsumeStaminaAmountBySprint.Value, deltaTime))
             {
                 _playerMove.SetSprintMultiplier(_playerStat.SprintMultiplier.Value);
             }
 
-            if (_playerInput.WantsToJump && _playerMove.JumpCount < _playerStat.MaxJumpCount.Value)
+            if (_playerInput.JumpPressed && _playerMove.JumpCount < _playerStat.MaxJumpCount.Value)
             {
                 if (_playerMove.JumpCount == 0 || _playerStat.Stamina.TryDecrease(_playerStat.ConsumeStaminaAmountByDoubleJump.Value))
                 {
                     _playerMove.Jump();
+                    _playerInput.ConsumeJump();
                 }
             }
-            _playerMove.Move(deltaTime);
+
+            if (_playerInput.BombPressed && _playerStat.BombCount.TryDecrease(1f))
+            {
+                _playerBomb.Fire();
+                _playerInput.ConsumeBomb();
+            }
+            
+            _playerMove.Move(_playerInput.MoveAxis, deltaTime);
             _playerStat.Stamina.Regenerate(deltaTime);
         }
     }

@@ -5,23 +5,38 @@ namespace Player
     [RequireComponent(typeof(CharacterController))]
     public class PlayerInput : MonoBehaviour
     {
-        private bool _wantsToSprint;
-        public bool WantsToSprint => _wantsToSprint;
+        public Vector2 MoveAxis { get; private set; }
+        
+        public bool SprintHeld  { get; private set; }
+        
+        public bool JumpPressed { get; private set; }
+        public bool BombPressed { get; private set; }
 
-        private bool _wantsToJump;
-        public bool WantsToJump => _wantsToJump;
-
-        public void Update()
+        void Update()
         {
-            if (Input.GetKeyDown(KeyCode.LeftShift)) _wantsToSprint = true;
-            if (Input.GetKeyUp(KeyCode.LeftShift)) _wantsToSprint = false;
+            MoveAxis = new Vector2(
+                Input.GetAxis("Horizontal"),
+                Input.GetAxis("Vertical")
+            );
             
-            if (Input.GetButtonDown("Jump")) _wantsToJump = true;
+            SprintHeld = Input.GetKey(KeyCode.LeftShift);
+            
+            JumpPressed = Input.GetButtonDown("Jump");
+            BombPressed = Input.GetKeyDown(KeyCode.G);
         }
 
-        public void Grounding()
+        public bool ConsumeJump()
         {
-            _wantsToJump = false;
+            if (!JumpPressed) return false;
+            JumpPressed = false;
+            return true;
+        }
+
+        public bool ConsumeBomb()
+        {
+            if (!BombPressed) return false;
+            BombPressed = false;
+            return true;
         }
     }
 }

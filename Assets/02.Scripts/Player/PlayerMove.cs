@@ -31,14 +31,11 @@ namespace Player
             _sprintMultiplier = sprintMultiplier;
         }
 
-        public void Move(float deltaTime)
+        public void Move(Vector2 axis, float deltaTime)
         {
             _velocityY += GRAVITY * deltaTime;
             
-            float x = Input.GetAxis("Horizontal");
-            float y = Input.GetAxis("Vertical");
-            
-            Vector3 direction = new Vector3(x, 0, y);
+            Vector3 direction = new Vector3(axis.x, 0, axis.y);
             
             direction.Normalize();
             direction = transform.TransformDirection(direction);

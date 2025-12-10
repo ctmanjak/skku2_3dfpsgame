@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace UI
 {
-    public class SliderUI : MonoBehaviour
+    public class ComsumableStatSliderUI : MonoBehaviour
     {
         [SerializeField] private Slider _slider;
 

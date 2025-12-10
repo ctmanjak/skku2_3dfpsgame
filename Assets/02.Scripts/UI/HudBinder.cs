@@ -1,25 +1,29 @@
-using System;
-using UI;
+using Player;
 using UnityEngine;
 
-namespace Player
+namespace UI
 {
     public class HudBinder : MonoBehaviour
     {
-        [SerializeField] private SliderUI _healthSliderUI;
-        [SerializeField] private SliderUI _staminaSliderUI;
         [SerializeField] private PlayerStat _playerStat;
+        
+        [SerializeField] private ComsumableStatSliderUI _healthSliderUI;
+        [SerializeField] private ComsumableStatSliderUI _staminaSliderUI;
+        
+        [SerializeField] private ConsumableStatTextUI _bombCountTextUI;
         
         private void OnEnable()
         {
             _playerStat.Health.OnValueChanged += _healthSliderUI.ChangeValue;
             _playerStat.Stamina.OnValueChanged += _staminaSliderUI.ChangeValue;
+            _playerStat.BombCount.OnValueChanged += _bombCountTextUI.ChangeValue;
         }
 
         private void OnDisable()
         {
             _playerStat.Health.OnValueChanged -= _healthSliderUI.ChangeValue;
             _playerStat.Stamina.OnValueChanged -= _staminaSliderUI.ChangeValue;
+            _playerStat.BombCount.OnValueChanged -= _bombCountTextUI.ChangeValue;
         }
     }
 }

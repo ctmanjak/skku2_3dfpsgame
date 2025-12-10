@@ -14,12 +14,14 @@ namespace Player
                 TryFire();
             }
         }
+        
         private void TryFire()
         {
             Ray ray = new Ray(_fireTransform.position, Camera.main.transform.forward);
             RaycastHit hitInfo = new RaycastHit();
             Fire(ray, hitInfo);
         }
+        
         private void Fire(Ray ray, RaycastHit hitInfo)
         {
             bool isHit = Physics.Raycast(ray, out hitInfo);
@@ -28,7 +30,6 @@ namespace Player
                 Debug.Log($"Hit : {hitInfo.transform.name}");
                 _hitEffect.transform.position = hitInfo.point;
                 _hitEffect.transform.forward = hitInfo.normal;
-                // ParticleSystem.EmitParams emitParams = new ParticleSystem.EmitParams();
                 _hitEffect.Play();
             }
         }
