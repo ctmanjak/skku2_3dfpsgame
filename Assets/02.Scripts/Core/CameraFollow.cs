@@ -45,11 +45,7 @@ namespace Core
                     _transformDuration
                 ).SetUpdate(UpdateType.Manual)
                 .SetEase(Ease.Linear)
-                .OnComplete(() =>
-                {
-                    _transformTween = null;
-                    _transformTimer = 0f;
-                });
+                .OnComplete(() => _transformTween = null);
             }
         }
     }
