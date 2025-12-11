@@ -1081,7 +1081,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &691402053
 Transform:
   m_ObjectHideFlags: 0
@@ -1525,6 +1525,7 @@ MonoBehaviour:
   _patrolMaxRadius: 6
   _patrolArriveRadius: 0.5
   _patrolNextTime: 2
+  _aggroDuration: 10
 --- !u!114 &988245054
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1557,7 +1558,7 @@ MonoBehaviour:
   _moveSpeed:
     _value: 3
   _attackDistance:
-    _value: 3
+    _value: 2
   _attackSpeed:
     _value: 1
   _attackDamage:
@@ -2322,7 +2323,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &1670890819
 BoxCollider:
   m_ObjectHideFlags: 0

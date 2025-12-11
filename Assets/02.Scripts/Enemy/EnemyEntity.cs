@@ -53,14 +53,17 @@ namespace Enemy
 
         private void Update()
         {
-            Vector3 directionToTarget = _target.position - transform.position;
-            float distanceToTarget = directionToTarget.magnitude;
-
-            _aggroTimer -= Time.deltaTime;
-            
-            if (_aggroTimer > 0f || distanceToTarget < _detectionDistance)
+            if (State != EEnemyState.Attack)
             {
-                State = EEnemyState.Trace;
+                Vector3 directionToTarget = _target.position - transform.position;
+                float distanceToTarget = directionToTarget.magnitude;
+
+                _aggroTimer -= Time.deltaTime;
+
+                if (_aggroTimer > 0f || distanceToTarget < _detectionDistance)
+                {
+                    State = EEnemyState.Trace;
+                }
             }
             
             switch (State)
@@ -172,7 +175,7 @@ namespace Enemy
 
         public void TakeDamage(float damage)
         {
-            _enemyStat.Health.TryDecrease(damage);
+            _enemyStat.Health.Decrease(damage);
 
             if (_enemyStat.Health.Value > 0)
             {
