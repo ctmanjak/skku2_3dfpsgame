@@ -150,3 +150,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _explosionEffectPrefab: {fileID: 1007127540951276732, guid: fea491fc755a849bea4104089f2bb165, type: 3}
+  _damage: 50
+  _knockbackPower: 80
+  _radius: 2
+  _enemyLayer:
+    serializedVersion: 2
+    m_Bits: 256

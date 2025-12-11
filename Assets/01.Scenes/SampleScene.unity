@@ -1366,7 +1366,10 @@ MonoBehaviour:
   _fireRate: 10
   _recoilPowerX: 1
   _recoilPowerY: 5
-  _knockbackPower: 5
+  _knockbackPower: 10
+  _enemyLayer:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!4 &879505163
 Transform:
   m_ObjectHideFlags: 0
@@ -1484,7 +1487,7 @@ CharacterController:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 256
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -2118,7 +2121,7 @@ GameObject:
   - component: {fileID: 1503201919}
   - component: {fileID: 1503201921}
   - component: {fileID: 1503201920}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: Nose
   m_TagString: Untagged
   m_Icon: {fileID: 0}

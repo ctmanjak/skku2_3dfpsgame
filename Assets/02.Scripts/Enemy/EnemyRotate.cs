@@ -4,9 +4,9 @@ namespace Enemy
 {
     public class EnemyRotate : MonoBehaviour
     {
-        public void Rotate(float x, float y)
+        public void Rotate(Vector3 direction)
         {
-            transform.rotation = Quaternion.Euler(x, y, 0f);
+            transform.rotation = Quaternion.LookRotation(direction);
         }
     }
 }

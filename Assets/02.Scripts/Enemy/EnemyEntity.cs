@@ -1,6 +1,9 @@
 using System.Collections;
+using System.Numerics;
 using Core;
 using UnityEngine;
+using Vector2 = UnityEngine.Vector2;
+using Vector3 = UnityEngine.Vector3;
 
 namespace Enemy
 {
@@ -22,6 +25,8 @@ namespace Enemy
         [SerializeField] private float _patrolMaxRadius = 6f;
         [SerializeField] private float _patrolArriveRadius = 0.5f;
         [SerializeField] private float _patrolNextTime = 1f;
+
+        [SerializeField] private float _aggroDuration = 10f;
         
         private EnemyMove _enemyMove;
         private EnemyStat _enemyStat;
@@ -31,10 +36,13 @@ namespace Enemy
         private Vector3 _patrolPosition;
         private float _patrolTimer;
 
+        private float _aggroTimer;
+
         private void Awake()
         {
             _enemyMove = GetComponent<EnemyMove>();
             _enemyStat = GetComponent<EnemyStat>();
+            _enemyRotate = GetComponent<EnemyRotate>();
         }
 
         private void Start()
@@ -47,8 +55,10 @@ namespace Enemy
         {
             Vector3 directionToTarget = _target.position - transform.position;
             float distanceToTarget = directionToTarget.magnitude;
+
+            _aggroTimer -= Time.deltaTime;
             
-            if (distanceToTarget < _detectionDistance)
+            if (_aggroTimer > 0f || distanceToTarget < _detectionDistance)
             {
                 State = EEnemyState.Trace;
             }
@@ -102,8 +112,7 @@ namespace Enemy
             Vector3 directionToTarget = _target.position - transform.position;
             float distanceToTarget = directionToTarget.magnitude;
             
-            directionToTarget.y = 0f;
-            _enemyMove.Move(directionToTarget.normalized, Time.deltaTime);
+            Move(directionToTarget);
 
             if (distanceToTarget > _detectionDistance)
             {
@@ -119,7 +128,7 @@ namespace Enemy
 
         private void Comeback()
         {
-            _enemyMove.Move((_originPosition - transform.position).normalized, Time.deltaTime);
+            Move((_originPosition - transform.position));
             
             Vector3 directionToOrigin = _originPosition - transform.position;
             float distanceToOrigin = directionToOrigin.magnitude;
@@ -167,6 +176,7 @@ namespace Enemy
 
             if (_enemyStat.Health.Value > 0)
             {
+                _aggroTimer = _aggroDuration;
                 State = EEnemyState.Hit;
                 StartCoroutine(HitCoroutine());
             }
@@ -187,8 +197,7 @@ namespace Enemy
             Vector3 directionToPatrol = _patrolPosition - transform.position;
             float distanceToPatrol = directionToPatrol.magnitude;
             
-            directionToPatrol.y = 0f;
-            _enemyMove.Move(directionToPatrol.normalized, Time.deltaTime);
+            Move(directionToPatrol);
 
             if (distanceToPatrol <= _patrolArriveRadius)
             {
@@ -205,6 +214,15 @@ namespace Enemy
             Vector3 offset = new Vector3(direction.x, 0f, direction.y) * distance;
 
             return _originPosition + offset;
+        }
+
+        private void Move(Vector3 direction)
+        {
+            _enemyMove.SetMoveDirection(direction.normalized);
+
+            Vector3 lookDirection = direction.normalized;
+            lookDirection.y = 0;
+            _enemyRotate.Rotate(lookDirection);
         }
     }
 }

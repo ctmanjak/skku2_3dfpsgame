@@ -15,7 +15,7 @@ namespace Enemy
         private float _moveSpeed; 
         private float _velocityY;
         private Vector3 _extraPower;
-        private float _extraPowerTimer;
+        private Vector3 _moveDirection;
 
         private void Awake()
         {
@@ -27,30 +27,35 @@ namespace Enemy
             _moveSpeed = moveSpeed;
         }
 
-        public void Move(Vector3 direction, float deltaTime)
+        public void SetMoveDirection(Vector3 direction)
         {
-            _velocityY += GRAVITY * deltaTime;
-            
-            direction.Normalize();
-
-            float moveSpeed = _moveSpeed;
-            direction.y = _velocityY;
-
-            Vector3 motion = direction * (moveSpeed * deltaTime);
-            _controller.Move(motion);
+            _moveDirection = direction;
         }
 
-        private void Update()
+        public void Update()
         {
-            if (_extraPowerTimer > 0f) _extraPowerTimer -= Time.deltaTime;
-            _extraPower = Vector3.Lerp(_extraPower, Vector3.zero, (_extraPowerDuration - _extraPowerTimer) / _extraPowerDuration);
+            float deltaTime = Time.deltaTime;
+            float t = deltaTime / _extraPowerDuration;
+            _extraPower = Vector3.Lerp(_extraPower, Vector3.zero, t);
             
-            if (_extraPower != Vector3.zero) _controller.Move(_extraPower * Time.deltaTime);
+            if (_controller.isGrounded && _velocityY < 0)
+            {
+                _velocityY = -1f;
+            }
+            
+            _velocityY += GRAVITY * deltaTime;
+            
+            _moveDirection.Normalize();
+
+            float moveSpeed = _moveSpeed;
+            _moveDirection.y = _velocityY;
+
+            Vector3 motion = _moveDirection * moveSpeed;
+            _controller.Move((motion + _extraPower) * deltaTime);
         }
 
         public void AddExtraPower(Vector3 direction)
         {
-            _extraPowerTimer = _extraPowerDuration;
             _extraPower += direction;
         }
     }

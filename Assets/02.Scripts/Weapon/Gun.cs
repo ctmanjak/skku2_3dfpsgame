@@ -16,6 +16,7 @@ namespace Weapon
         [SerializeField] private float _recoilPowerX = 1f;
         [SerializeField] private float _recoilPowerY = 1f;
         [SerializeField] private float _knockbackPower = 2f;
+        [SerializeField] private LayerMask _enemyLayer;
 
         private float _reloadTimer;
         private float _fireTimer;
@@ -72,7 +73,7 @@ namespace Weapon
         
         private void Fire(Ray ray, out RaycastHit hitInfo)
         {
-            bool isHit = Physics.Raycast(ray, out hitInfo);
+            bool isHit = Physics.Raycast(ray, out hitInfo, float.PositiveInfinity, _enemyLayer);
             if (isHit)
             {   
                 _hitEffect.transform.position = hitInfo.point;
