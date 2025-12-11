@@ -12,6 +12,8 @@ namespace Player
     [RequireComponent(typeof(PlayerGunFire))]
     public class PlayerEntity : MonoBehaviour, IDamageable
     {
+        [SerializeField] private CameraFollow _cameraFollow;
+        
         private PlayerMove _playerMove;
         private PlayerStat _playerStat;
         private PlayerInput _playerInput;
@@ -73,6 +75,13 @@ namespace Player
             if (_playerInput.ReloadPressed)
             {
                 _playerEquipment.Reload();
+                _playerInput.ConsumeReload();
+            }
+
+            if (_playerInput.ChangeViewPressed)
+            {
+                _cameraFollow.NextViewType();
+                _playerInput.ConsumeChangeView();
             }
             
             _playerMove.Move(_playerInput.MoveAxis, deltaTime);

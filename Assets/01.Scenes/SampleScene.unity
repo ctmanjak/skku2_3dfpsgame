@@ -515,13 +515,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 274534170}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.2587913, y: 0.0037943658, z: -0.0141607635, w: 0.96582204}
+  m_LocalRotation: {x: 0.2588191, y: 0, z: 0, w: 0.9659258}
   m_LocalPosition: {x: 0, y: 2, z: -2}
   m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1833637475}
-  m_LocalEulerAnglesHint: {x: 30, y: 0, z: -1.68}
+  m_LocalEulerAnglesHint: {x: 30, y: 0, z: 0}
 --- !u!1 &343728937
 GameObject:
   m_ObjectHideFlags: 0
@@ -1514,7 +1514,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5bff7e2e4c00043529a0fcbb3087fdfe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  State: 0
+  _state: 0
   _originPosition: {x: 0, y: 0, z: 0}
   _target: {fileID: 1833637475}
   _detectionDistance: 10
@@ -2724,6 +2724,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c674ce37e4cf4804a4c8f7d24306914b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _cameraFollow: {fileID: 1893523310}
 --- !u!114 &1833637481
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3005,9 +3006,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63a5d92d9d4c45a1baa45d3abdfe06f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _target: {fileID: 2111726468}
-  _tpsTarget: {fileID: 274534171}
+  _targetTransform: {fileID: 1833637475}
   _transformDuration: 10
+  _viewTypeConfigs:
+  - ViewType: 0
+    Offset: {x: 0, y: 0.5, z: 0.5}
+  - ViewType: 1
+    Offset: {x: 0, y: 2, z: -2}
 --- !u!1 &1903398291
 GameObject:
   m_ObjectHideFlags: 0
