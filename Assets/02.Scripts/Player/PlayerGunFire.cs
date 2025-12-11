@@ -16,7 +16,7 @@ namespace Player
         
         public void Fire()
         {
-            _gun.TryFire();
+            _gun.TryFire(Camera.main.transform.forward);
         }
     }
 }

@@ -1,3 +1,4 @@
+using Core;
 using UnityEngine;
 
 namespace Player
@@ -9,7 +10,7 @@ namespace Player
     [RequireComponent(typeof(PlayerBomb))]
     [RequireComponent(typeof(PlayerEquipment))]
     [RequireComponent(typeof(PlayerGunFire))]
-    public class PlayerEntity : MonoBehaviour
+    public class PlayerEntity : MonoBehaviour, IDamageable
     {
         private PlayerMove _playerMove;
         private PlayerStat _playerStat;
@@ -76,6 +77,11 @@ namespace Player
             
             _playerMove.Move(_playerInput.MoveAxis, deltaTime);
             _playerStat.Stamina.Regenerate(deltaTime);
+        }
+
+        public void TakeDamage(float damage)
+        {
+            _playerStat.Health.TryDecrease(damage);
         }
     }
 }

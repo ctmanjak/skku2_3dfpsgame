@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Core;
 using UnityEngine;
 
 namespace Weapon
@@ -9,10 +10,12 @@ namespace Weapon
         [SerializeField] private Transform _fireTransform;
         [SerializeField] private ParticleSystem _hitEffect;
 
+        [SerializeField] private float _damage = 10f;
         [SerializeField] private float _reloadDuration = 1.6f;
         [SerializeField] private float _fireRate = 2f;
         [SerializeField] private float _recoilPowerX = 1f;
         [SerializeField] private float _recoilPowerY = 1f;
+        [SerializeField] private float _knockbackPower = 2f;
 
         private float _reloadTimer;
         private float _fireTimer;
@@ -43,7 +46,7 @@ namespace Weapon
             return _magazine.GetLeftAmmo() > 0;
         }
         
-        public bool TryFire()
+        public bool TryFire(Vector3 direction)
         {
             if (_fireTimer > 0f || _isReloading)
             {
@@ -52,14 +55,22 @@ namespace Weapon
 
             if (!_magazine.TryLoadAmmo()) return false;
             
-            Ray ray = new Ray(_fireTransform.position, Camera.main.transform.forward);
-            RaycastHit hitInfo = new RaycastHit();
-            Fire(ray, hitInfo);
+            Ray ray = new Ray(_fireTransform.position, direction);
+            Fire(ray, out var hitInfo);
+            
+            if (hitInfo.collider != null)
+            {
+                IDamageable damageable = hitInfo.collider.GetComponent<IDamageable>();
+                damageable.TakeDamage(_damage);
+                
+                IKnockbackable knockbackable = hitInfo.collider.GetComponent<IKnockbackable>();
+                knockbackable.Knockback(direction.normalized * _knockbackPower);
+            }
 
             return true;
         }
         
-        private void Fire(Ray ray, RaycastHit hitInfo)
+        private void Fire(Ray ray, out RaycastHit hitInfo)
         {
             bool isHit = Physics.Raycast(ray, out hitInfo);
             if (isHit)

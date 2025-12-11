@@ -40,12 +40,6 @@ namespace Player
             direction.Normalize();
             direction = transform.TransformDirection(direction);
 
-            if (Input.GetButtonDown("Jump"))
-            {
-                if (_controller.isGrounded) Jump();
-                
-            }
-
             float moveSpeed = _moveSpeed * _sprintMultiplier;
             
             direction.y = _velocityY;
