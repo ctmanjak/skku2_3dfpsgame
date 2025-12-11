@@ -65,13 +65,13 @@ namespace Player
             {
                 if (!_playerEquipment.IsAmmoLeftInGun())
                 {
-                    _playerEquipment.Reload(_playerEquipment.GetNextMagazine());
+                    _playerEquipment.Reload();
                 } else _playerGunFire.Fire();
             }
 
             if (_playerInput.ReloadPressed)
             {
-                _playerEquipment.Reload(_playerEquipment.GetNextMagazine());
+                _playerEquipment.Reload();
             }
             
             _playerMove.Move(_playerInput.MoveAxis, deltaTime);

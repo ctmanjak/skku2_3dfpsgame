@@ -1,12 +1,15 @@
 using System;
 using System.Collections;
+using Core;
 using UnityEngine;
 using Weapon;
+using Random = UnityEngine.Random;
 
 namespace Player
 {
     public class PlayerEquipment : MonoBehaviour
     {
+        [SerializeField] private CameraRotate _cameraRotate;
         [SerializeField] private Gun _gun;
         [SerializeField] private Magazine[] _magazines;
 
@@ -39,21 +42,24 @@ namespace Player
             {
                 _currentMagazineIndex = 0;
                 _gun.Initialize(_magazines[_currentMagazineIndex]);
+                _gun.OnFire += gun =>
+                    _cameraRotate.AddRecoil(Random.Range(-gun.RecoilPowerX, gun.RecoilPowerX), -gun.RecoilPowerY);
             }
             
             OnMagazineChanged?.Invoke(_gun, _magazines);
         }
 
-        public void Reload(Magazine magazine)
+        public void Reload()
         {
             if (_gun.IsReloading) return;
-            StartCoroutine(ReloadRoutine(magazine));
+            _gun.StartReload();
+            StartCoroutine(ReloadRoutine(GetNextMagazine()));
         }
         
         private IEnumerator ReloadRoutine(Magazine magazine)
         {
             OnReloadStart?.Invoke();
-            yield return StartCoroutine(_gun.Reload(magazine));
+            yield return _gun.ReloadRoutine(magazine);
             OnReloadEnd?.Invoke();
             OnMagazineChanged?.Invoke(_gun, _magazines);
         }
@@ -65,8 +71,7 @@ namespace Player
 
         public Magazine GetNextMagazine()
         {
-            _currentMagazineIndex++;
-            if (_currentMagazineIndex >= _magazines.Length) _currentMagazineIndex = 0;
+            if (++_currentMagazineIndex >= _magazines.Length) _currentMagazineIndex = 0;
             return _magazines[_currentMagazineIndex];
         }
     }

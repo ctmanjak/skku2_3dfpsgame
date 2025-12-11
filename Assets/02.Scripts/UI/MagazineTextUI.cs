@@ -22,9 +22,9 @@ namespace UI
             _leftAmmoInMagazines = 0;
             foreach (var magazine in magazines)
             {
-                _leftAmmoInMagazines += magazine.GetLeftAmmo();
+                if (gun.Magazine != magazine) _leftAmmoInMagazines += magazine.GetLeftAmmo();
             }
-
+            
             ChangeValueOnGun(gun);
             ChangeValue();
         }

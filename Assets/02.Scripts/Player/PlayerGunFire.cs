@@ -7,7 +7,7 @@ namespace Player
     {
         [SerializeField] private Transform _fireTransform;
         [SerializeField] private ParticleSystem _hitEffect;
-        [SerializeField] private Gun _gun;
+        private Gun _gun;
 
         public void Initialize(Gun gun)
         {

@@ -11,6 +11,8 @@ namespace Weapon
 
         [SerializeField] private float _reloadDuration = 1.6f;
         [SerializeField] private float _fireRate = 2f;
+        [SerializeField] private float _recoilPowerX = 1f;
+        [SerializeField] private float _recoilPowerY = 1f;
 
         private float _reloadTimer;
         private float _fireTimer;
@@ -18,7 +20,10 @@ namespace Weapon
         private bool _isReloading;
 
         public bool IsReloading => _isReloading;
-        
+        public float RecoilPowerX => _recoilPowerX;
+        public float RecoilPowerY => _recoilPowerY;
+        public Magazine Magazine => _magazine;
+
         public event Action<Gun> OnFire;
         public event Action<float> OnReload;
 
@@ -69,11 +74,14 @@ namespace Weapon
             _fireTimer = 1 / _fireRate;
         }
 
-        public IEnumerator Reload(Magazine magazine)
+        public void StartReload()
         {
             _isReloading = true;
             _reloadTimer = 0;
+        }
 
+        public IEnumerator ReloadRoutine(Magazine magazine)
+        {
             while (_reloadTimer < _reloadDuration)
             {
                 yield return null;

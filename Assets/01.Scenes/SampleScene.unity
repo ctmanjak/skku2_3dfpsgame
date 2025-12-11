@@ -1363,6 +1363,8 @@ MonoBehaviour:
   _hitEffect: {fileID: 992643243}
   _reloadDuration: 1.6
   _fireRate: 10
+  _recoilPowerX: 1
+  _recoilPowerY: 5
 --- !u!4 &879505163
 Transform:
   m_ObjectHideFlags: 0
@@ -2506,7 +2508,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _fireTransform: {fileID: 2111726468}
   _hitEffect: {fileID: 992643243}
-  _gun: {fileID: 0}
 --- !u!114 &1833637484
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2531,28 +2532,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c34d9130b6af4c8b854ced5e9a5bfb68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _cameraRotate: {fileID: 1893523309}
   _gun: {fileID: 879505162}
   _magazines:
   - _ammo:
       _maxValue: 30
       _value: 30
       _regenerateAmount: 0
+    _consumeAmmoAmount: 1
   - _ammo:
       _maxValue: 30
       _value: 30
       _regenerateAmount: 0
+    _consumeAmmoAmount: 1
   - _ammo:
       _maxValue: 30
       _value: 30
       _regenerateAmount: 0
+    _consumeAmmoAmount: 1
   - _ammo:
       _maxValue: 30
       _value: 30
       _regenerateAmount: 0
+    _consumeAmmoAmount: 1
   - _ammo:
       _maxValue: 30
       _value: 30
       _regenerateAmount: 0
+    _consumeAmmoAmount: 1
 --- !u!1 &1893523304
 GameObject:
   m_ObjectHideFlags: 0
@@ -2704,6 +2711,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67ec75a005e6b411997c72762105adb2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _restoreDuration: 2
 --- !u!114 &1893523310
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2718,7 +2726,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _target: {fileID: 2111726468}
   _tpsTarget: {fileID: 274534171}
-  _transformDuration: 1
+  _transformDuration: 10
 --- !u!1 &1903398291
 GameObject:
   m_ObjectHideFlags: 0
