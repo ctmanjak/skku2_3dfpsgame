@@ -17,8 +17,7 @@ namespace Enemy
         public ValueStat AttackDistance => _attackDistance;
         public ValueStat AttackSpeed => _attackSpeed;
         public ValueStat AttackDamage => _attackDamage;
-
-
+        
         public void Initialize()
         {
             _health.Initialize();

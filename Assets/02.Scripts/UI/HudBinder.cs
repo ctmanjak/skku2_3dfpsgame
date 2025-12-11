@@ -8,8 +8,8 @@ namespace UI
         [SerializeField] private PlayerStat _playerStat;
         [SerializeField] private PlayerEquipment _playerEquipment;
         
-        [SerializeField] private ComsumableStatSliderUI _healthSliderUI;
-        [SerializeField] private ComsumableStatSliderUI _staminaSliderUI;
+        [SerializeField] private ConsumableStatSliderUI _healthSliderUI;
+        [SerializeField] private ConsumableStatSliderUI _staminaSliderUI;
         [SerializeField] private SliderUI _reloadSliderUI;
         
         [SerializeField] private ConsumableStatTextUI _bombCountTextUI;
@@ -35,10 +35,10 @@ namespace UI
             _playerStat.Stamina.OnValueChanged -= _staminaSliderUI.ChangeValue;
             _playerStat.BombCount.OnValueChanged -= _bombCountTextUI.ChangeValue;
             
-            _playerEquipment.OnFire += _magazineTextUI.ChangeValueOnGun;
-            _playerEquipment.OnReload += _reloadSliderUI.ChangeValue;
-            _playerEquipment.OnReloadStart += _reloadSliderUI.Activate;
-            _playerEquipment.OnReloadEnd += _reloadSliderUI.Deactivate;
+            _playerEquipment.OnFire -= _magazineTextUI.ChangeValueOnGun;
+            _playerEquipment.OnReload -= _reloadSliderUI.ChangeValue;
+            _playerEquipment.OnReloadStart -= _reloadSliderUI.Activate;
+            _playerEquipment.OnReloadEnd -= _reloadSliderUI.Deactivate;
             _playerEquipment.OnMagazineChanged -= _magazineTextUI.ChangeValueOnMagazines;
         }
     }

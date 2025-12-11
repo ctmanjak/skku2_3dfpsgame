@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Numerics;
 using Core;
 using UnityEngine;
 using Vector2 = UnityEngine.Vector2;
@@ -12,7 +11,7 @@ namespace Enemy
     [RequireComponent(typeof(EnemyRotate))]
     public class EnemyEntity : MonoBehaviour, IDamageable, IKnockbackable
     {
-        public EEnemyState State = EEnemyState.Idle;
+        [SerializeField] private EEnemyState _state = EEnemyState.Idle;
 
         [SerializeField] private Vector3 _originPosition;
         [SerializeField] private Transform _target;
@@ -53,7 +52,7 @@ namespace Enemy
 
         private void Update()
         {
-            if (State != EEnemyState.Attack)
+            if (_state != EEnemyState.Attack)
             {
                 Vector3 directionToTarget = _target.position - transform.position;
                 float distanceToTarget = directionToTarget.magnitude;
@@ -62,11 +61,11 @@ namespace Enemy
 
                 if (_aggroTimer > 0f || distanceToTarget < _detectionDistance)
                 {
-                    State = EEnemyState.Trace;
+                    _state = EEnemyState.Trace;
                 }
             }
             
-            switch (State)
+            switch (_state)
             {
                 case EEnemyState.Idle:
                     Idle();
@@ -97,7 +96,7 @@ namespace Enemy
             
             if (distanceToOrigin > _patrolMaxRadius)
             {
-                State = EEnemyState.Comeback;
+                _state = EEnemyState.Comeback;
                 return;
             }
 
@@ -105,7 +104,7 @@ namespace Enemy
             if (_patrolTimer <= 0f)
             {
                 _patrolPosition = GetRandomPositionForPatrol();
-                State = EEnemyState.Patrol;
+                _state = EEnemyState.Patrol;
                 return;
             }
         }
@@ -119,12 +118,12 @@ namespace Enemy
 
             if (distanceToTarget > _detectionDistance)
             {
-                State = EEnemyState.Idle;
+                _state = EEnemyState.Idle;
                 return;
             }
             if (distanceToTarget <= _enemyStat.AttackDistance.Value)
             {
-                State = EEnemyState.Attack;
+                _state = EEnemyState.Attack;
                 return;
             }
         }
@@ -138,7 +137,7 @@ namespace Enemy
             
             if (distanceToOrigin <= _comebackRadius)
             {
-                State = EEnemyState.Idle;
+                _state = EEnemyState.Idle;
             }
         }
 
@@ -147,7 +146,7 @@ namespace Enemy
             float distance = (_target.position - transform.position).magnitude;
             if (distance > _enemyStat.AttackDistance.Value)
             {
-                State = EEnemyState.Idle;
+                _state = EEnemyState.Idle;
                 return;
             }
 
@@ -164,7 +163,7 @@ namespace Enemy
         private IEnumerator HitCoroutine()
         {
             yield return new WaitForSeconds(_hitDelay);
-            State = EEnemyState.Idle;
+            _state = EEnemyState.Idle;
         }
 
         private IEnumerator DeathCoroutine()
@@ -180,12 +179,12 @@ namespace Enemy
             if (_enemyStat.Health.Value > 0)
             {
                 _aggroTimer = _aggroDuration;
-                State = EEnemyState.Hit;
+                _state = EEnemyState.Hit;
                 StartCoroutine(HitCoroutine());
             }
             else
             {
-                State = EEnemyState.Death;
+                _state = EEnemyState.Death;
                 StartCoroutine(DeathCoroutine());
             }
         }
@@ -205,7 +204,7 @@ namespace Enemy
             if (distanceToPatrol <= _patrolArriveRadius)
             {
                 _patrolTimer = _patrolNextTime;
-                State = EEnemyState.Idle;
+                _state = EEnemyState.Idle;
             }
         }
 
