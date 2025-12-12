@@ -9,7 +9,7 @@ namespace Enemy
     [RequireComponent(typeof(EnemyMove))]
     [RequireComponent(typeof(EnemyStat))]
     [RequireComponent(typeof(EnemyRotate))]
-    public class EnemyEntity : MonoBehaviour, IDamageable, IKnockbackable
+    public class EnemyEntity : MonoBehaviour, IDamageable
     {
         [SerializeField] private EEnemyState _state = EEnemyState.Idle;
 

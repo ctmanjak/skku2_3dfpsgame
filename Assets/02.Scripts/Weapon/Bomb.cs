@@ -17,16 +17,13 @@ namespace Weapon
         {
             Instantiate(_explosionEffectPrefab, transform.position, Quaternion.identity);
             Collider[] hits = Physics.OverlapSphere(transform.position, _radius, _enemyLayer);
-            
             foreach (var hit in hits)
             {
                 IDamageable damageable = hit.GetComponent<IDamageable>();
-                damageable.TakeDamage(_damage);
+                damageable?.TakeDamage(_damage);
 
                 Vector3 knockbackDirection = (hit.transform.position - transform.position).normalized;
-                
-                IKnockbackable knockbackable = hit.GetComponent<IKnockbackable>();
-                knockbackable.Knockback(knockbackDirection * _knockbackPower);
+                damageable?.Knockback(knockbackDirection * _knockbackPower);
             }
             Destroy(gameObject);
         }

@@ -62,10 +62,8 @@ namespace Weapon
             if (hitInfo.collider != null)
             {
                 IDamageable damageable = hitInfo.collider.GetComponent<IDamageable>();
-                damageable.TakeDamage(_damage);
-                
-                IKnockbackable knockbackable = hitInfo.collider.GetComponent<IKnockbackable>();
-                knockbackable.Knockback(direction.normalized * _knockbackPower);
+                damageable?.TakeDamage(_damage);
+                damageable?.Knockback(direction.normalized * _knockbackPower);
             }
 
             return true;

@@ -92,5 +92,9 @@ namespace Player
         {
             _playerStat.Health.TryDecrease(damage);
         }
+
+        public void Knockback(Vector3 direction)
+        {
+        }
     }
 }
