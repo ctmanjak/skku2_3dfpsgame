@@ -37,7 +37,6 @@ namespace UI
 
             if (_previousFillAmount > fillAmount && _juicy)
             {
-                _delayImage.gameObject.SetActive(true);
                 if (_juicyCoroutine != null) StopCoroutine(_juicyCoroutine);
                 _juicyCoroutine = StartCoroutine(ChangeDelayImage(fillAmount));
                 transform.DOShakePosition(_shakeDuration, _shakeIntensity)
@@ -49,14 +48,17 @@ namespace UI
 
         private IEnumerator ChangeDelayImage(float amount)
         {
-            float oldAmount = _delayImage.fillAmount;
+            _delayImage.gameObject.SetActive(true);
+            
+            _delayImage.fillAmount = Mathf.Max(_delayImage.fillAmount, _previousFillAmount);
             _delayTimer = _delayDuration;
             yield return new WaitForSeconds(_delayWaitTime);
             
             while (_delayTimer > 0f)
             {
                 yield return null;
-                _delayImage.fillAmount = Mathf.Lerp(oldAmount, amount, (_delayDuration - _delayTimer) / _delayDuration);
+                _delayImage.fillAmount = Mathf.Lerp(_delayImage.fillAmount, amount, (_delayDuration - _delayTimer) / _delayDuration);
+                _delayImage.fillAmount = Mathf.Max(_delayImage.fillAmount, _fillImage.fillAmount);
                 _delayTimer -= Time.deltaTime;
             }
             

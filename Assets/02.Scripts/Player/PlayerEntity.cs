@@ -89,6 +89,7 @@ namespace Player
             
             _playerMove.Move(_playerInput.MoveAxis, deltaTime);
             _playerStat.Stamina.Regenerate(deltaTime);
+            _playerStat.Health.Regenerate(deltaTime);
         }
 
         public void TakeDamage(float damage)
