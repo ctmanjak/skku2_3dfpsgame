@@ -90,7 +90,12 @@ namespace Player
 
         public void TakeDamage(float damage)
         {
-            _playerStat.Health.TryDecrease(damage);
+            _playerStat.Health.Decrease(damage);
+
+            if (_playerStat.Health.Value <= 0f)
+            {
+                GameManager.Instance.GameOver();
+            }
         }
 
         public void Knockback(Vector3 direction)
