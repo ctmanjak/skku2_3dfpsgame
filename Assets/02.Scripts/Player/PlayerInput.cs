@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace Player
 {
@@ -23,7 +24,10 @@ namespace Player
             );
             
             SprintHeld = Input.GetKey(KeyCode.LeftShift);
-            FireHeld = Input.GetKey(KeyCode.Q);
+            if(!EventSystem.current.IsPointerOverGameObject())
+            {
+                FireHeld = Input.GetMouseButton(0);
+            }
             
             JumpPressed = Input.GetButtonDown("Jump");
             BombPressed = Input.GetKeyDown(KeyCode.G);

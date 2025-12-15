@@ -1,3 +1,4 @@
+using System;
 using Core;
 using UnityEngine;
 
@@ -20,6 +21,8 @@ namespace Player
         private PlayerBomb _playerBomb;
         private PlayerEquipment _playerEquipment;
         private PlayerGunFire _playerGunFire;
+
+        public event Action OnHit;
 
         private void Awake()
         {
@@ -91,6 +94,8 @@ namespace Player
         public void TakeDamage(float damage)
         {
             _playerStat.Health.Decrease(damage);
+            
+            OnHit?.Invoke();
 
             if (_playerStat.Health.Value <= 0f)
             {
