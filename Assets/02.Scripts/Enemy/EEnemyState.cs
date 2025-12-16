@@ -8,6 +8,7 @@ namespace Enemy
         Comeback,
         Attack,
         Hit,
-        Death
+        Death,
+        Jump
     }
 }

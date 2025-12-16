@@ -47,7 +47,7 @@ namespace Enemy
         private void Start()
         {
             _originPosition = transform.position;
-            _enemyMove.Initialize(_enemyStat.MoveSpeed.Value);
+            _enemyMove.Initialize(_enemyStat.MoveSpeed.Value, _enemyStat.JumpPower.Value);
         }
 
         private void Update()
@@ -114,7 +114,7 @@ namespace Enemy
             Vector3 directionToTarget = _target.position - transform.position;
             float distanceToTarget = directionToTarget.magnitude;
             
-            Move(directionToTarget);
+            Move(_target.position);
 
             if (distanceToTarget > _detectionDistance)
             {
@@ -130,7 +130,7 @@ namespace Enemy
 
         private void Comeback()
         {
-            Move((_originPosition - transform.position));
+            Move(_originPosition);
             
             Vector3 directionToOrigin = _originPosition - transform.position;
             float distanceToOrigin = directionToOrigin.magnitude;
@@ -199,7 +199,7 @@ namespace Enemy
             Vector3 directionToPatrol = _patrolPosition - transform.position;
             float distanceToPatrol = directionToPatrol.magnitude;
             
-            Move(directionToPatrol);
+            Move(_patrolPosition);
 
             if (distanceToPatrol <= _patrolArriveRadius)
             {
@@ -218,13 +218,15 @@ namespace Enemy
             return _originPosition + offset;
         }
 
-        private void Move(Vector3 direction)
+        private void Move(Vector3 destination)
         {
-            _enemyMove.SetMoveDirection(direction.normalized);
-
-            Vector3 lookDirection = direction.normalized;
-            lookDirection.y = 0;
-            _enemyRotate.Rotate(lookDirection);
+            _enemyMove.SetDestination(destination);
+            
+            // Vector3 steeringTarget = _enemyMove.GetSteeringTarget();
+            //
+            // Vector3 lookDirection = (steeringTarget - transform.position).normalized;
+            // lookDirection.y = 0;
+            // if (lookDirection != Vector3.zero) _enemyRotate.Rotate(lookDirection);
         }
     }
 }

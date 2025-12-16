@@ -10,6 +10,7 @@ namespace Enemy
         [SerializeField] private ValueStat _attackDistance;
         [SerializeField] private ValueStat _attackSpeed;
         [SerializeField] private ValueStat _attackDamage;
+        [SerializeField] private ValueStat _jumpPower;
 
         public ConsumableStat Health => _health;
         
@@ -17,7 +18,8 @@ namespace Enemy
         public ValueStat AttackDistance => _attackDistance;
         public ValueStat AttackSpeed => _attackSpeed;
         public ValueStat AttackDamage => _attackDamage;
-        
+        public ValueStat JumpPower => _jumpPower;
+
         public void Initialize()
         {
             _health.Initialize();

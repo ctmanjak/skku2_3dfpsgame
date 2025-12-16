@@ -14,6 +14,8 @@ namespace Core
         public EGameState State => _state;
         [SerializeField] private TextMeshProUGUI _stateTextUI;
 
+        [SerializeField] private float _startDelay = 1f;
+
         private void Awake()
         {
             if (_instance != null) Destroy(gameObject);
@@ -31,7 +33,7 @@ namespace Core
         
         private IEnumerator StartToPlay_Coroutine()
         {
-            yield return new WaitForSecondsRealtime(2f);
+            yield return new WaitForSecondsRealtime(_startDelay);
             _stateTextUI.text = "START!";
             yield return new WaitForSecondsRealtime(0.5f);
             _state = EGameState.Playing;
