@@ -1,5 +1,6 @@
 using System.Collections;
 using Core;
+using UnityEditor.Animations;
 using UnityEngine;
 using Vector2 = UnityEngine.Vector2;
 using Vector3 = UnityEngine.Vector3;
@@ -11,6 +12,10 @@ namespace Enemy
     [RequireComponent(typeof(EnemyRotate))]
     public class EnemyEntity : MonoBehaviour, IDamageable
     {
+        private static readonly int _stateParam = Animator.StringToHash("State");
+
+        [SerializeField] private Animator _animator;
+        
         [SerializeField] private EEnemyState _state = EEnemyState.Idle;
 
         [SerializeField] private Vector3 _originPosition;
@@ -30,6 +35,7 @@ namespace Enemy
         private EnemyMove _enemyMove;
         private EnemyStat _enemyStat;
         private EnemyRotate _enemyRotate;
+        private EnemyAttack _enemyAttack;
 
         private float _attackTimer;
         private Vector3 _patrolPosition;
@@ -42,6 +48,11 @@ namespace Enemy
             _enemyMove = GetComponent<EnemyMove>();
             _enemyStat = GetComponent<EnemyStat>();
             _enemyRotate = GetComponent<EnemyRotate>();
+            _enemyAttack = GetComponentInChildren<EnemyAttack>();
+            if (_animator == null)
+            {
+                _animator = GetComponentInChildren<Animator>();
+            }
         }
 
         private void Start()
@@ -87,6 +98,8 @@ namespace Enemy
                     Patrol();
                     break;
             }
+            
+            _animator.SetInteger(_stateParam, (int)_state);
         }
 
         private void Idle()
@@ -149,15 +162,18 @@ namespace Enemy
                 _state = EEnemyState.Idle;
                 return;
             }
+            
+            _enemyAttack.SetTarget(_target);
+            _enemyAttack.SetDamage(_enemyStat.AttackDamage.Value);
 
-            _attackTimer += Time.deltaTime;
-            if (_attackTimer > _enemyStat.AttackSpeed.Value)
-            {
-                _attackTimer = 0f;
-                
-                IDamageable damageable = _target.GetComponent<IDamageable>();
-                damageable.TakeDamage(_enemyStat.AttackDamage.Value);
-            }
+            // _attackTimer += Time.deltaTime;
+            // if (_attackTimer > _enemyStat.AttackSpeed.Value)
+            // {
+            //     _attackTimer = 0f;
+            //     
+            //     IDamageable damageable = _target.GetComponent<IDamageable>();
+            //     damageable.TakeDamage(_enemyStat.AttackDamage.Value);
+            // }
         }
 
         private IEnumerator HitCoroutine()
