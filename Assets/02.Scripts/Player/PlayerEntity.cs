@@ -14,6 +14,7 @@ namespace Player
     public class PlayerEntity : MonoBehaviour, IDamageable
     {
         [SerializeField] private CameraFollow _cameraFollow;
+        [SerializeField] private CameraRotate _cameraRotate;
         
         private PlayerMove _playerMove;
         private PlayerStat _playerStat;
@@ -21,6 +22,7 @@ namespace Player
         private PlayerBomb _playerBomb;
         private PlayerEquipment _playerEquipment;
         private PlayerGunFire _playerGunFire;
+        private PlayerRotate _playerRotate;
 
         public event Action OnHit;
 
@@ -32,6 +34,7 @@ namespace Player
             _playerBomb = GetComponent<PlayerBomb>();
             _playerEquipment = GetComponent<PlayerEquipment>();
             _playerGunFire = GetComponent<PlayerGunFire>();
+            _playerRotate = GetComponent<PlayerRotate>();
         }
 
         private void Start()
@@ -81,12 +84,33 @@ namespace Player
                 _playerInput.ConsumeReload();
             }
 
+
+            ViewTypeConfig viewTypeConfig = _cameraFollow.GetViewTypeConfig();
             if (_playerInput.ChangeViewPressed)
             {
                 _cameraFollow.NextViewType();
+                viewTypeConfig = _cameraFollow.GetViewTypeConfig();
+                if (viewTypeConfig.IsRotationLock)
+                {
+                    _cameraRotate.LockRotation(viewTypeConfig.Rotation, _cameraFollow.TransformDuration);
+                }
+                else
+                {
+                    _cameraRotate.UnlockRotation();
+                }
+                
                 _playerInput.ConsumeChangeView();
+                
             }
-            
+
+            if (viewTypeConfig.IsRotationLock)
+            {
+                _playerRotate.LockAim(new Vector2(_cameraRotate.BaseX, _cameraRotate.BaseY));
+            }
+            else
+            {
+                _playerRotate.Aim(_playerInput.AimAxis);
+            }
             _playerMove.Move(_playerInput.MoveAxis, deltaTime);
             _playerStat.Stamina.Regenerate(deltaTime);
             _playerStat.Health.Regenerate(deltaTime);

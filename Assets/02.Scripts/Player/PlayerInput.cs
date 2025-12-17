@@ -7,6 +7,7 @@ namespace Player
     public class PlayerInput : MonoBehaviour
     {
         public Vector2 MoveAxis { get; private set; }
+        public Vector2 AimAxis { get; private set; }
         
         public bool SprintHeld  { get; private set; }
         public bool FireHeld  { get; private set; }
@@ -21,6 +22,10 @@ namespace Player
             MoveAxis = new Vector2(
                 Input.GetAxis("Horizontal"),
                 Input.GetAxis("Vertical")
+            );
+            AimAxis = new Vector2(
+                Input.GetAxis("Mouse X"),
+                -Input.GetAxis("Mouse Y")
             );
             
             SprintHeld = Input.GetKey(KeyCode.LeftShift);

@@ -19,10 +19,15 @@ namespace Player
             if (!_cameraRotate && Camera.main) _cameraRotate = Camera.main.GetComponent<CameraRotate>();
         }
 
-        private void Update()
-        {        
-            float mouseX = Input.GetAxis("Mouse X");
-            float mouseY = -Input.GetAxis("Mouse Y");
+        public void LockAim(Vector2 axis)
+        {
+            
+        }
+
+        public void Aim(Vector2 axis)
+        {
+            float mouseX = axis.x;
+            float mouseY = axis.y;
 
             _accumulateX += mouseX * _sensitivity * Time.deltaTime;
             _accumulateY = Mathf.Clamp(_accumulateY + mouseY * _sensitivity * Time.deltaTime, MIN_Y, MAX_Y);
