@@ -1,7 +1,14 @@
 fileFormatVersion: 2
 guid: 0a2dc320d8e71f64985ed0cef63a76ea
+AssetOrigin:
+  serializedVersion: 1
+  productId: 308882
+  packageName: Stylised Zombie
+  packageVersion: 1.0
+  assetPath: Assets/GreyratsLab/Stylised Zombie/Model/Zombie Monster.fbx
+  uploadId: 726903
 ModelImporter:
-  serializedVersion: 21300
+  serializedVersion: 22200
   internalIDToNameTable: []
   externalObjects:
   - first:
@@ -21,8 +28,6 @@ ModelImporter:
     optimizeGameObjects: 0
     removeConstantScaleCurves: 1
     motionNodeName: 
-    rigImportErrors: 
-    rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 
     animationRetargetingWarnings: 
@@ -40,11 +45,12 @@ ModelImporter:
     isReadable: 0
   meshes:
     lODScreenPercentages: []
-    globalScale: 1
+    globalScale: 0.75
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
     sortHierarchyByName: 1
+    importPhysicalCameras: 1
     importVisibility: 1
     importBlendShapes: 1
     importCameras: 1
@@ -85,8 +91,352 @@ ModelImporter:
   importAnimation: 1
   humanDescription:
     serializedVersion: 3
-    human: []
-    skeleton: []
+    human:
+    - boneName: spine
+      humanName: Hips
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: thigh.L
+      humanName: LeftUpperLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: thigh.R
+      humanName: RightUpperLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: shin.L
+      humanName: LeftLowerLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: shin.R
+      humanName: RightLowerLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: foot.L
+      humanName: LeftFoot
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: foot.R
+      humanName: RightFoot
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: spine.007
+      humanName: Spine
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: spine.002
+      humanName: Chest
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: spine.004
+      humanName: Neck
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: spine.005
+      humanName: Head
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: shoulder.L
+      humanName: LeftShoulder
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: shoulder.R
+      humanName: RightShoulder
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: upper_arm.L
+      humanName: LeftUpperArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: upper_arm.R
+      humanName: RightUpperArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: forearm.L
+      humanName: LeftLowerArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: forearm.R
+      humanName: RightLowerArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: hand.L
+      humanName: LeftHand
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: hand.R
+      humanName: RightHand
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: toe.L
+      humanName: LeftToes
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: toe.R
+      humanName: RightToes
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: spine.006
+      humanName: RightEye
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: spine.003
+      humanName: UpperChest
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    skeleton:
+    - name: Zombie Monster(Clone)
+      parentName: 
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Zombie
+      parentName: Zombie Monster(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Zombie.001
+      parentName: Zombie Monster(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
+      scale: {x: 1, y: 1, z: 1}
+    - name: spine
+      parentName: Zombie.001
+      position: {x: -0, y: 0.049623493, z: 0.90787613}
+      rotation: {x: 0.7904554, y: 0, z: -0, w: 0.6125196}
+      scale: {x: 1, y: 0.99999994, z: 0.9999999}
+    - name: spine.007
+      parentName: spine
+      position: {x: -0, y: 0.13684168, z: -0.000000012572854}
+      rotation: {x: -0.06447635, y: 0, z: -0, w: 0.99791926}
+      scale: {x: 1, y: 0.99999994, z: 0.99999994}
+    - name: spine.002
+      parentName: spine.007
+      position: {x: -0, y: 0.12283315, z: -0.00000000687578}
+      rotation: {x: -0.077464156, y: 0, z: -0, w: 0.99699515}
+      scale: {x: 1, y: 0.9999999, z: 0.99999994}
+    - name: spine.003
+      parentName: spine.002
+      position: {x: -0, y: 0.15542187, z: 0.0000000027939675}
+      rotation: {x: 0.01450411, y: -0.00000011919679, z: -0.0000000017290247, w: 0.99989486}
+      scale: {x: 1, y: 1.0000001, z: 1}
+    - name: spine.004
+      parentName: spine.003
+      position: {x: -1.2490008e-16, y: 0.18777671, z: -5.238689e-10}
+      rotation: {x: 0.16212066, y: 0.000000117632325, z: -0.000000019326297, w: 0.986771}
+      scale: {x: 1, y: 1, z: 1.0000001}
+    - name: spine.005
+      parentName: spine.004
+      position: {x: -0, y: 0.05985197, z: 0}
+      rotation: {x: -0.14475758, y: -0.00000011795376, z: 0.000000017256445, w: 0.98946714}
+      scale: {x: 1, y: 1, z: 1}
+    - name: spine.006
+      parentName: spine.005
+      position: {x: 8.388186e-16, y: 0.2798067, z: -0.0000000027939675}
+      rotation: {x: -0.016166313, y: 0.00000011919376, z: 0.0000000019271806, w: 0.99986935}
+      scale: {x: 1, y: 0.99999994, z: 1}
+    - name: shoulder.L
+      parentName: spine.003
+      position: {x: -0.01645125, y: 0.12022145, z: 0.067131884}
+      rotation: {x: -0.5702464, y: 0.43353564, z: 0.4160043, w: 0.5601842}
+      scale: {x: 0.9999999, y: 1, z: 0.99999994}
+    - name: upper_arm.L
+      parentName: shoulder.L
+      position: {x: 0.0014946457, y: 0.20354174, z: -0.033154845}
+      rotation: {x: 0.083171874, y: -0.708526, z: 0.124257, w: 0.689662}
+      scale: {x: 1.0000001, y: 1.0000001, z: 1}
+    - name: forearm.L
+      parentName: upper_arm.L
+      position: {x: -0.000000046995407, y: 0.27052075, z: 0.0000000034924592}
+      rotation: {x: -0.0019599884, y: -0.038726863, z: 0.0029931683, w: 0.99924344}
+      scale: {x: 1, y: 0.99999994, z: 1}
+    - name: hand.L
+      parentName: forearm.L
+      position: {x: -0.00000009243012, y: 0.21067126, z: 0.0000000010477378}
+      rotation: {x: -0.008248121, y: 0.010042979, z: 0.057696667, w: 0.9982496}
+      scale: {x: 0.99999994, y: 1.0000001, z: 0.99999994}
+    - name: shoulder.R
+      parentName: spine.003
+      position: {x: 0.016451282, y: 0.12022145, z: 0.067131884}
+      rotation: {x: -0.5702464, y: -0.43353564, z: -0.41600406, w: 0.56018436}
+      scale: {x: 1, y: 0.99999994, z: 0.99999994}
+    - name: upper_arm.R
+      parentName: shoulder.R
+      position: {x: -0.0014946553, y: 0.20354174, z: -0.033154946}
+      rotation: {x: 0.08317154, y: 0.7085262, z: -0.12425721, w: 0.6896618}
+      scale: {x: 1, y: 1.0000001, z: 1}
+    - name: forearm.R
+      parentName: upper_arm.R
+      position: {x: -0.000000064610504, y: 0.27052063, z: 0.0000000013969838}
+      rotation: {x: -0.0019599875, y: 0.03872685, z: -0.0029931378, w: 0.99924344}
+      scale: {x: 1.0000001, y: 1, z: 1}
+    - name: hand.R
+      parentName: forearm.R
+      position: {x: 0.0000000029795046, y: 0.21067126, z: -0.0000000024447215}
+      rotation: {x: -0.008248121, y: -0.010042983, z: -0.05769664, w: 0.9982496}
+      scale: {x: 0.99999994, y: 1, z: 0.99999994}
+    - name: breast.L
+      parentName: spine.003
+      position: {x: -0.110119596, y: -0.033595577, z: -0.038390882}
+      rotation: {x: 0.000000041428663, y: 0.70611304, z: 0.7080991, w: -0.00000014793298}
+      scale: {x: 1, y: 1, z: 1}
+    - name: breast.R
+      parentName: spine.003
+      position: {x: 0.110119574, y: -0.033595577, z: -0.038390934}
+      rotation: {x: 0.00000014828586, y: 0.70611304, z: 0.7080991, w: -0.00000004124942}
+      scale: {x: 1, y: 1, z: 1}
+    - name: pelvis.L
+      parentName: spine
+      position: {x: -0, y: -0.0000001033768, z: -0.000000005587935}
+      rotation: {x: -0.22844058, y: 0.75905573, z: 0.33098415, w: 0.51195586}
+      scale: {x: 0.9999998, y: 0.9999999, z: 0.99999994}
+    - name: pelvis.R
+      parentName: spine
+      position: {x: -0, y: -0.0000001033768, z: -0.000000005587935}
+      rotation: {x: -0.22844058, y: -0.75905573, z: -0.33098415, w: 0.51195586}
+      scale: {x: 0.9999998, y: 0.9999999, z: 0.99999994}
+    - name: thigh.L
+      parentName: spine
+      position: {x: -0.1287357, y: 0.039712235, z: 0.029496294}
+      rotation: {x: 0.98615235, y: -0.007987175, z: 0.001341693, w: 0.1656442}
+      scale: {x: 1, y: 1, z: 0.99999976}
+    - name: shin.L
+      parentName: thigh.L
+      position: {x: 0.000000005868969, y: 0.4363071, z: 0.0000000035340686}
+      rotation: {x: 0.062899806, y: 0.0008666164, z: -0.016406717, w: 0.99788463}
+      scale: {x: 1, y: 1, z: 0.99999994}
+    - name: foot.L
+      parentName: shin.L
+      position: {x: 0.0000000103559605, y: 0.4209634, z: -0.0000000017680577}
+      rotation: {x: -0.47745922, y: -0.0047551095, z: 0.006970001, w: 0.8786134}
+      scale: {x: 1.0000001, y: 1, z: 1}
+    - name: toe.L
+      parentName: foot.L
+      position: {x: -0.000000017168185, y: 0.09070569, z: 0.0000000042797232}
+      rotation: {x: -0.00000008251122, y: 0.95980394, z: -0.28067133, w: -0.00000042713643}
+      scale: {x: 1, y: 0.99999964, z: 0.99999994}
+    - name: heel.02.L
+      parentName: foot.L
+      position: {x: 0.034161173, y: -0.02050506, z: 0.117490895}
+      rotation: {x: 0.67333925, y: -0.6733391, z: 0.21590327, w: 0.21590382}
+      scale: {x: 0.99999994, y: 1, z: 1}
+    - name: thigh.R
+      parentName: spine
+      position: {x: 0.1287357, y: 0.039712235, z: 0.029496294}
+      rotation: {x: 0.98615235, y: 0.007987175, z: -0.001341693, w: 0.1656442}
+      scale: {x: 1, y: 1, z: 0.99999976}
+    - name: shin.R
+      parentName: thigh.R
+      position: {x: -0.000000005868969, y: 0.4363071, z: 0.0000000035340686}
+      rotation: {x: 0.062899806, y: -0.0008666164, z: 0.016406717, w: 0.99788463}
+      scale: {x: 1, y: 1, z: 0.99999994}
+    - name: foot.R
+      parentName: shin.R
+      position: {x: -0.0000000103559605, y: 0.4209634, z: -0.0000000017680577}
+      rotation: {x: -0.47745922, y: 0.0047551095, z: -0.006970001, w: 0.8786134}
+      scale: {x: 1.0000001, y: 1, z: 1}
+    - name: toe.R
+      parentName: foot.R
+      position: {x: 0.000000017168185, y: 0.09070569, z: 0.0000000042797232}
+      rotation: {x: 0.00000008251122, y: 0.95980394, z: -0.28067133, w: 0.00000042713643}
+      scale: {x: 1, y: 0.99999964, z: 0.99999994}
+    - name: heel.02.R
+      parentName: foot.R
+      position: {x: -0.034161173, y: -0.02050506, z: 0.117490895}
+      rotation: {x: 0.67333925, y: 0.6733391, z: -0.21590327, w: 0.21590382}
+      scale: {x: 0.99999994, y: 1, z: 1}
     armTwist: 0.5
     foreArmTwist: 0.5
     upperLegTwist: 0.5
@@ -94,7 +444,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 1
+    globalScale: 0.75
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 1
@@ -105,15 +455,9 @@ ModelImporter:
   humanoidOversampling: 1
   avatarSetup: 1
   addHumanoidExtraRootOnlyWhenUsingAvatar: 1
+  importBlendShapeDeformPercent: 0
   remapMaterialsIfMaterialImportModeIsNone: 0
   additionalBone: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 
-AssetOrigin:
-  serializedVersion: 1
-  productId: 308882
-  packageName: Stylised Zombie
-  packageVersion: 1.0
-  assetPath: Assets/GreyratsLab/Stylised Zombie/Model/Zombie Monster.fbx
-  uploadId: 726903

@@ -13,6 +13,12 @@ namespace Player
     [RequireComponent(typeof(PlayerGunFire))]
     public class PlayerEntity : MonoBehaviour, IDamageable
     {
+        private static readonly int _speedHash = Animator.StringToHash("Speed");
+        private static readonly int _attackHash = Animator.StringToHash("Attack");
+        private static readonly int _jumpHash = Animator.StringToHash("Jump");
+        private static readonly int _death = Animator.StringToHash("Death");
+        private static readonly int _throw = Animator.StringToHash("Throw");
+
         [SerializeField] private CameraFollow _cameraFollow;
         [SerializeField] private CameraRotate _cameraRotate;
         
@@ -23,6 +29,9 @@ namespace Player
         private PlayerEquipment _playerEquipment;
         private PlayerGunFire _playerGunFire;
         private PlayerRotate _playerRotate;
+        private Animator _animator;
+
+        private bool _isDead;
 
         public event Action OnHit;
 
@@ -35,6 +44,8 @@ namespace Player
             _playerEquipment = GetComponent<PlayerEquipment>();
             _playerGunFire = GetComponent<PlayerGunFire>();
             _playerRotate = GetComponent<PlayerRotate>();
+            
+            _animator = GetComponentInChildren<Animator>();
         }
 
         private void Start()
@@ -47,7 +58,13 @@ namespace Player
 
         private void Update()
         {
+            if (_isDead) return;
             float deltaTime = Time.deltaTime;
+
+            if (_playerInput.UnlockCursorPressed)
+            {
+                CursorManager.Instance.UnlockCursor();
+            }
 
             if (_playerMove.IsGrounded()) _playerMove.Grounding();
             if (_playerInput.SprintHeld && _playerStat.Stamina.TryConsume(_playerStat.ConsumeStaminaAmountBySprint.Value, deltaTime))
@@ -59,6 +76,7 @@ namespace Player
             {
                 if (_playerMove.JumpCount == 0 || _playerStat.Stamina.TryDecrease(_playerStat.ConsumeStaminaAmountByDoubleJump.Value))
                 {
+                    _animator.SetTrigger(_jumpHash);
                     _playerMove.Jump();
                     _playerInput.ConsumeJump();
                 }
@@ -66,7 +84,8 @@ namespace Player
 
             if (_playerInput.BombPressed && _playerStat.BombCount.TryDecrease(1f))
             {
-                _playerBomb.Fire();
+                _animator.SetTrigger(_throw);
+                // _playerBomb.Fire();
                 _playerInput.ConsumeBomb();
             }
 
@@ -75,7 +94,14 @@ namespace Player
                 if (!_playerEquipment.IsAmmoLeftInGun())
                 {
                     _playerEquipment.Reload();
-                } else _playerGunFire.Fire();
+                }
+                else
+                {
+                    if (_playerGunFire.TryFire())
+                    {
+                        _animator.SetTrigger(_attackHash);
+                    }
+                }
             }
 
             if (_playerInput.ReloadPressed)
@@ -111,6 +137,8 @@ namespace Player
             {
                 _playerRotate.Aim(_playerInput.AimAxis);
             }
+            
+            _animator.SetFloat(_speedHash, _playerInput.MoveAxis.magnitude);
             _playerMove.Move(_playerInput.MoveAxis, deltaTime);
             _playerStat.Stamina.Regenerate(deltaTime);
             _playerStat.Health.Regenerate(deltaTime);
@@ -118,13 +146,16 @@ namespace Player
 
         public void TakeDamage(float damage)
         {
+            if (_isDead) return;
+            
             _playerStat.Health.Decrease(damage);
             
             OnHit?.Invoke();
 
             if (_playerStat.Health.Value <= 0f)
             {
-                GameManager.Instance.GameOver();
+                _isDead = true;
+                _animator.SetTrigger(_death);
             }
         }
 

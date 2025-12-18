@@ -3,9 +3,10 @@ using UnityEngine.AI;
 
 namespace Enemy
 {
-    [RequireComponent(typeof(CharacterController))]
     public class EnemyMove : MonoBehaviour
     {
+        private static readonly int _jump = Animator.StringToHash("Jump");
+        
         private const float GRAVITY = -9.81f;
 
         [SerializeField] private float _extraPowerDuration = 0.3f;
@@ -15,6 +16,7 @@ namespace Enemy
         private CharacterController _controller;
 
         private NavMeshAgent _agent;
+        private Animator _animator;
 
         private float _jumpPower;
         private float _moveSpeed; 
@@ -22,13 +24,16 @@ namespace Enemy
         private Vector3 _extraPower;
         private Vector3 _moveDirection;
         private Transform _target;
+        private bool _isStop;
 
         private OffMeshLinkData? _currentLinkData;
 
         private void Awake()
         {
-            _controller = GetComponent<CharacterController>();
-            _agent = GetComponent<NavMeshAgent>();
+            _controller = GetComponentInParent<CharacterController>();
+            _agent = GetComponentInParent<NavMeshAgent>();
+
+            _animator = GetComponent<Animator>();
         }
 
         public void Initialize(float moveSpeed, float jumpPower)
@@ -48,7 +53,17 @@ namespace Enemy
             return _agent.steeringTarget;
         }
 
-        public void Update()
+        public void Freeze()
+        {
+            _isStop = true;
+        }
+
+        public void Unfreeze()
+        {
+            _isStop = false;
+        }
+
+        private void Update()
         {
             float deltaTime = Time.deltaTime;
             float t = deltaTime / _extraPowerDuration;
@@ -82,7 +97,7 @@ namespace Enemy
                 if (toStartPos.magnitude <= _jumpDesiredDistance)
                 {
                     _agent.SetDestination(_currentLinkData.Value.endPos);
-                    Jump();
+                    _animator.SetTrigger(_jump);
                     _agent.CompleteOffMeshLink();
                     _currentLinkData = null;
                 }
@@ -96,10 +111,15 @@ namespace Enemy
 
             moveDirection.y = _velocityY;
             Vector3 motion = moveDirection * moveSpeed;
+            if (_isStop)
+            {
+                motion.x = 0f;
+                motion.z = 0f;
+            }
             _controller.Move((motion + _extraPower) * deltaTime);
         }
 
-        private void Jump()
+        public void Jump()
         {
             _velocityY = _jumpPower;
         }

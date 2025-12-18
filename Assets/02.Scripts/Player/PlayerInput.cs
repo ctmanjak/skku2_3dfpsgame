@@ -16,6 +16,7 @@ namespace Player
         public bool BombPressed { get; private set; }
         public bool ReloadPressed { get; private set; }
         public bool ChangeViewPressed { get; private set; }
+        public bool UnlockCursorPressed { get; private set; }
 
         void Update()
         {
@@ -38,6 +39,7 @@ namespace Player
             BombPressed = Input.GetKeyDown(KeyCode.G);
             ReloadPressed = Input.GetKeyDown(KeyCode.R);
             ChangeViewPressed = Input.GetKeyDown(KeyCode.T);
+            UnlockCursorPressed = Input.GetKeyDown(KeyCode.Escape);
         }
 
         public bool ConsumeJump()
@@ -63,8 +65,15 @@ namespace Player
 
         public bool ConsumeChangeView()
         {
-            if (!ReloadPressed) return false;
-            ReloadPressed = false;
+            if (!ChangeViewPressed) return false;
+            ChangeViewPressed = false;
+            return true;
+        }
+
+        public bool ConsumeUnlockCursor()
+        {
+            if (!UnlockCursorPressed) return false;
+            UnlockCursorPressed = false;
             return true;
         }
     }

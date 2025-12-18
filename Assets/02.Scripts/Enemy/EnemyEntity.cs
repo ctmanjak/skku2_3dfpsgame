@@ -7,7 +7,6 @@ using Vector3 = UnityEngine.Vector3;
 
 namespace Enemy
 {
-    [RequireComponent(typeof(EnemyMove))]
     [RequireComponent(typeof(EnemyStat))]
     [RequireComponent(typeof(EnemyRotate))]
     public class EnemyEntity : MonoBehaviour, IDamageable
@@ -45,7 +44,7 @@ namespace Enemy
 
         private void Awake()
         {
-            _enemyMove = GetComponent<EnemyMove>();
+            _enemyMove = GetComponentInChildren<EnemyMove>();
             _enemyStat = GetComponent<EnemyStat>();
             _enemyRotate = GetComponent<EnemyRotate>();
             _enemyAttack = GetComponentInChildren<EnemyAttack>();
@@ -165,19 +164,11 @@ namespace Enemy
             
             _enemyAttack.SetTarget(_target);
             _enemyAttack.SetDamage(_enemyStat.AttackDamage.Value);
-
-            // _attackTimer += Time.deltaTime;
-            // if (_attackTimer > _enemyStat.AttackSpeed.Value)
-            // {
-            //     _attackTimer = 0f;
-            //     
-            //     IDamageable damageable = _target.GetComponent<IDamageable>();
-            //     damageable.TakeDamage(_enemyStat.AttackDamage.Value);
-            // }
         }
 
         private IEnumerator HitCoroutine()
         {
+            _animator.SetInteger(_stateParam, 5);
             yield return new WaitForSeconds(_hitDelay);
             _state = EEnemyState.Idle;
         }
@@ -203,6 +194,7 @@ namespace Enemy
                 _state = EEnemyState.Death;
                 StartCoroutine(DeathCoroutine());
             }
+            _animator.SetInteger(_stateParam, (int)_state);
         }
 
         public void Knockback(Vector3 direction)
@@ -237,12 +229,6 @@ namespace Enemy
         private void Move(Vector3 destination)
         {
             _enemyMove.SetDestination(destination);
-            
-            // Vector3 steeringTarget = _enemyMove.GetSteeringTarget();
-            //
-            // Vector3 lookDirection = (steeringTarget - transform.position).normalized;
-            // lookDirection.y = 0;
-            // if (lookDirection != Vector3.zero) _enemyRotate.Rotate(lookDirection);
         }
     }
 }
