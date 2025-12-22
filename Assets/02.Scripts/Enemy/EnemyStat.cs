@@ -5,12 +5,12 @@ namespace Enemy
 {
     public class EnemyStat : MonoBehaviour
     {
-        [SerializeField] private ConsumableStat _health;
-        [SerializeField] private ValueStat _moveSpeed;
-        [SerializeField] private ValueStat _attackDistance;
-        [SerializeField] private ValueStat _attackSpeed;
-        [SerializeField] private ValueStat _attackDamage;
-        [SerializeField] private ValueStat _jumpPower;
+        [SerializeField] protected ConsumableStat _health;
+        [SerializeField] protected ValueStat _moveSpeed;
+        [SerializeField] protected ValueStat _attackDistance;
+        [SerializeField] protected ValueStat _attackSpeed;
+        [SerializeField] protected ValueStat _attackDamage;
+        [SerializeField] protected ValueStat _jumpPower;
 
         public ConsumableStat Health => _health;
         

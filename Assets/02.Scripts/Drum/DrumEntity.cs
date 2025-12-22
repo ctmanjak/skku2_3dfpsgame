@@ -45,18 +45,18 @@ namespace Drum
                 float t = Mathf.Clamp01(1f - distance / _drumStat.ExplosionRadius.Value);
                 
                 IDamageable damageable = explosionCollider.GetComponent<IDamageable>();
-                damageable?.TakeDamage(_drumStat.ExplosionDamage.Value * t);
+                damageable?.TakeDamage(new AttackContext(_drumStat.ExplosionDamage.Value * t));
 
                 Vector3 knockbackDirection = (explosionCollider.transform.position - transform.position).normalized;
                 damageable?.Knockback(knockbackDirection * (_drumStat.ExplosionKnockbackPower.Value * t));
             }
         }
 
-        public void TakeDamage(float damage)
+        public void TakeDamage(AttackContext context)
         {
             if (_drumStat.Health.Value <= 0f) return;
             
-            _drumStat.Health.Decrease(damage);
+            _drumStat.Health.Decrease(context.Damage);
 
             if (_drumStat.Health.Value <= 0f)
             {

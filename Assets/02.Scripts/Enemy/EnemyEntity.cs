@@ -30,6 +30,8 @@ namespace Enemy
         [SerializeField] private float _patrolNextTime = 1f;
 
         [SerializeField] private float _aggroDuration = 10f;
+
+        [SerializeField] private GameObject _bloodSprayPrefab;
         
         private EnemyMove _enemyMove;
         private EnemyStat _enemyStat;
@@ -62,6 +64,8 @@ namespace Enemy
 
         private void Update()
         {
+            if (_state == EEnemyState.Death) return;
+            
             if (_state != EEnemyState.Attack)
             {
                 Vector3 directionToTarget = _target.position - transform.position;
@@ -168,7 +172,6 @@ namespace Enemy
 
         private IEnumerator HitCoroutine()
         {
-            _animator.SetInteger(_stateParam, 5);
             yield return new WaitForSeconds(_hitDelay);
             _state = EEnemyState.Idle;
         }
@@ -179,9 +182,14 @@ namespace Enemy
             Destroy(gameObject);
         }
 
-        public void TakeDamage(float damage)
+        public void TakeDamage(AttackContext context)
         {
-            _enemyStat.Health.Decrease(damage);
+            _enemyStat.Health.Decrease(context.Damage);
+            
+            if (context.HitPoint != null && context.HitNormal != null)
+            {
+                Instantiate(_bloodSprayPrefab, (Vector3)context.HitPoint, Quaternion.LookRotation((Vector3)context.HitNormal), transform);
+            }
 
             if (_enemyStat.Health.Value > 0)
             {

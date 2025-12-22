@@ -1,3 +1,4 @@
+using System;
 using Core;
 using UnityEngine;
 
@@ -9,10 +10,17 @@ namespace Weapon
         [SerializeField] private float _damage = 50f;
         [SerializeField] private float _knockbackPower = 20f;
         [SerializeField] private float _radius = 5f;
+        [SerializeField] private float _minKnockbackPowerY = 0.5f;
+
+        [SerializeField] private Rigidbody _rigidbody;
         
         [SerializeField] private LayerMask _enemyLayer;
+
+        private void Awake()
+        {
+            _rigidbody = GetComponent<Rigidbody>();
+        }
         
-    
         private void OnCollisionEnter(Collision collision)
         {
             Instantiate(_explosionEffectPrefab, transform.position, Quaternion.identity);
@@ -20,12 +28,15 @@ namespace Weapon
             foreach (var hit in hits)
             {
                 IDamageable damageable = hit.GetComponent<IDamageable>();
-                damageable?.TakeDamage(_damage);
+                damageable?.TakeDamage(new AttackContext(_damage));
 
                 Vector3 knockbackDirection = (hit.transform.position - transform.position).normalized;
+                knockbackDirection.y = Math.Max(_minKnockbackPowerY, knockbackDirection.y); 
                 damageable?.Knockback(knockbackDirection * _knockbackPower);
             }
-            Destroy(gameObject);
+            _rigidbody.linearVelocity = Vector3.zero;
+            _rigidbody.angularVelocity = Vector3.zero;
+            PoolManager.Release(gameObject);
         }
     }
 }

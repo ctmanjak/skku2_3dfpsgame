@@ -21,6 +21,9 @@ namespace Player
 
         [SerializeField] private CameraFollow _cameraFollow;
         [SerializeField] private CameraRotate _cameraRotate;
+
+        [SerializeField] private GameObject _normalCrosshair;
+        [SerializeField] private GameObject _zoomInCrosshair;
         
         private PlayerMove _playerMove;
         private PlayerStat _playerStat;
@@ -32,6 +35,7 @@ namespace Player
         private Animator _animator;
 
         private bool _isDead;
+        private EZoomMode _zoomMode = EZoomMode.Normal;
 
         public event Action OnHit;
 
@@ -61,9 +65,27 @@ namespace Player
             if (_isDead) return;
             float deltaTime = Time.deltaTime;
 
+            if (_playerInput.ZoomInPressed)
+            {
+                if (_zoomMode == EZoomMode.Normal)
+                {
+                    _normalCrosshair.SetActive(false);
+                    _zoomInCrosshair.SetActive(true);
+                    _zoomMode = EZoomMode.ZoomIn;
+                }
+                else
+                {
+                    _normalCrosshair.SetActive(true);
+                    _zoomInCrosshair.SetActive(false);
+                    _zoomMode = EZoomMode.Normal;
+                }
+                _playerInput.ConsumeZoomIn();
+            }
+
             if (_playerInput.UnlockCursorPressed)
             {
                 CursorManager.Instance.UnlockCursor();
+                _playerInput.ConsumeUnlockCursor();
             }
 
             if (_playerMove.IsGrounded()) _playerMove.Grounding();
@@ -85,7 +107,6 @@ namespace Player
             if (_playerInput.BombPressed && _playerStat.BombCount.TryDecrease(1f))
             {
                 _animator.SetTrigger(_throw);
-                // _playerBomb.Fire();
                 _playerInput.ConsumeBomb();
             }
 
@@ -144,11 +165,11 @@ namespace Player
             _playerStat.Health.Regenerate(deltaTime);
         }
 
-        public void TakeDamage(float damage)
+        public void TakeDamage(AttackContext context)
         {
             if (_isDead) return;
             
-            _playerStat.Health.Decrease(damage);
+            _playerStat.Health.Decrease(context.Damage);
             
             OnHit?.Invoke();
 

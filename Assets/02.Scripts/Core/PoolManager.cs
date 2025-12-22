@@ -59,10 +59,18 @@ namespace Core
             return obj;
         }
 
+        public static GameObject Get(GameObject prefab, Transform parent)
+        {
+            GameObject obj = Get(prefab);
+            obj.transform.SetParent(parent);
+            return obj;
+        }
+
         public static void Release(GameObject obj)
         {
             GameObject prefab = _prefabs[obj];
-            _pools[prefab].Release(obj);
+            ObjectPool<GameObject> pool = _pools[prefab];
+            pool.Release(obj);
             _prefabs.Remove(obj);
         }
     }

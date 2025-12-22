@@ -22,7 +22,7 @@ namespace Enemy
         public void Attack()
         {
             IDamageable damageable = _target.GetComponent<IDamageable>();
-            damageable.TakeDamage(_damage);
+            damageable.TakeDamage(new AttackContext(_damage));
         }
     }
 }

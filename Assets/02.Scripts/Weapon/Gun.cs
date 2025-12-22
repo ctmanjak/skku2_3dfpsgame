@@ -9,6 +9,8 @@ namespace Weapon
     {
         [SerializeField] private Transform _fireTransform;
         [SerializeField] private ParticleSystem _hitEffect;
+        [SerializeField] private GameObject _bulletTracerPrefab;
+        [SerializeField] private float _maxBulletTraceDistance = 10f;
 
         [SerializeField] private float _damage = 10f;
         [SerializeField] private float _reloadDuration = 1.6f;
@@ -62,7 +64,7 @@ namespace Weapon
             if (hitInfo.collider != null)
             {
                 IDamageable damageable = hitInfo.collider.GetComponent<IDamageable>();
-                damageable?.TakeDamage(_damage);
+                damageable?.TakeDamage(new AttackContext(_damage, hitInfo.point, hitInfo.normal));
                 damageable?.Knockback(direction.normalized * _knockbackPower);
             }
 
@@ -71,13 +73,26 @@ namespace Weapon
         
         private void Fire(Ray ray, out RaycastHit hitInfo)
         {
-            bool isHit = Physics.Raycast(ray, out hitInfo, float.PositiveInfinity, _enemyLayer);
+            GameObject bulletTracerObject = PoolManager.Get(_bulletTracerPrefab);
+            BulletTracer bulletTracer = bulletTracerObject.GetComponent<BulletTracer>();
+            bulletTracer?.Initialize(transform);
+
+            Vector3 hitPosition;
+            bool isHit = Physics.Raycast(ray, out hitInfo, float.PositiveInfinity);
             if (isHit)
             {   
                 _hitEffect.transform.position = hitInfo.point;
                 _hitEffect.transform.forward = hitInfo.normal;
                 _hitEffect.Play();
+
+                hitPosition = hitInfo.point;
             }
+            else
+            {
+                hitPosition = ray.origin + ray.direction * _maxBulletTraceDistance;
+            }
+            
+            bulletTracer?.Fire(hitPosition);
             
             OnFire?.Invoke(this);
 
