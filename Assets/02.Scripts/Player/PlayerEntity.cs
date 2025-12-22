@@ -1,5 +1,6 @@
 using System;
 using Core;
+using Gold;
 using UnityEngine;
 
 namespace Player
@@ -24,6 +25,15 @@ namespace Player
 
         [SerializeField] private GameObject _normalCrosshair;
         [SerializeField] private GameObject _zoomInCrosshair;
+        
+        [SerializeField] private float _goldMagnetRadius = 3.0f;
+        [SerializeField] private LayerMask _goldLayerMask;
+        [SerializeField] private int _goldMagnetMaxPerFrame = 32;
+        
+        [SerializeField] private Transform _goldCollectPoint;
+        public Transform GoldCollectPoint => _goldCollectPoint ? _goldCollectPoint : transform;
+
+        private readonly Collider[] _goldHits = new Collider[64];
         
         private PlayerMove _playerMove;
         private PlayerStat _playerStat;
@@ -50,6 +60,9 @@ namespace Player
             _playerRotate = GetComponent<PlayerRotate>();
             
             _animator = GetComponentInChildren<Animator>();
+            
+            if (_goldCollectPoint == null)
+                _goldCollectPoint = transform; // 미지정 시 fallback
         }
 
         private void Start()
@@ -163,6 +176,32 @@ namespace Player
             _playerMove.Move(_playerInput.MoveAxis, deltaTime);
             _playerStat.Stamina.Regenerate(deltaTime);
             _playerStat.Health.Regenerate(deltaTime);
+            
+            MagnetGolds();
+        }
+        
+        private void MagnetGolds()
+        {
+            int hitCount = Physics.OverlapSphereNonAlloc(
+                transform.position,
+                _goldMagnetRadius,
+                _goldHits,
+                _goldLayerMask,
+                QueryTriggerInteraction.Collide
+            );
+
+            int max = Mathf.Min(hitCount, _goldMagnetMaxPerFrame);
+
+            for (int i = 0; i < max; i++)
+            {
+                Collider col = _goldHits[i];
+                if (col == null) continue;
+
+                if (col.TryGetComponent<GoldPickupMagnet>(out var gold))
+                {
+                    gold.BeginMagnet(GoldCollectPoint);
+                }
+            }
         }
 
         public void TakeDamage(AttackContext context)
